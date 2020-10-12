@@ -12,7 +12,7 @@
       <InteractionButton v-if="target.GLTF_data != null" sourceInactive="assets/common/02 3D Model Icon Inactive.png" sourceActive="assets/common/02 3D Model Icon Active.png" :state="this.$store.state.interfaceStates.ModelState"/>
       <InteractionButton v-if="target.longtext != null" sourceInactive="assets/common/03 Icon Text Inactive.png" sourceActive="assets/common/03 Icon Text Active.png" :state="this.$store.state.interfaceStates.TextState"/>
       <InteractionButton v-if="target.video != null || target.youtube != null" sourceInactive="assets/common/04 Icon Video Inactive.png" sourceActive="assets/common/04 Icon Video Active.png" :state="this.$store.state.interfaceStates.VideoState"/>
-      <InteractionButton sourceInactive="assets/common/05 Icon Images Inactive.png" sourceActive="assets/common/05 Icon Images Active.png" :state="this.$store.state.interfaceStates.ImageState"/>
+      <InteractionButton v-if="target.slide_images != null" sourceInactive="assets/common/05 Icon Images Inactive.png" sourceActive="assets/common/05 Icon Images Active.png" :state="this.$store.state.interfaceStates.ImageState"/>
     </div>
   </div>
 </template>

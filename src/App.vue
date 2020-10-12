@@ -20,8 +20,12 @@
       <div class="ARWindow">
         <a-scene arjs="detectionMode: mono_and_matrix; matrixCodeType: 3x3;">
           <!-- handle marker with your own pattern -->
-          <a-marker type="barcode" value="5" detect-visible-component="targetID: 2">
+          <a-marker type="barcode" value="2" detect-visible-component="targetID: 2">
             <a-entity :gltf-model="GetModelPath(this.$store.state.targets[2])" scale="0.1 0.1 0.1"></a-entity>
+          </a-marker>
+
+          <a-marker type="barcode" value="5" detect-visible-component="targetID: 4">
+            <a-entity :gltf-model="GetModelPath(this.$store.state.targets[4])" scale="0.1 0.1 0.1"></a-entity>
           </a-marker>
         </a-scene>
       </div>

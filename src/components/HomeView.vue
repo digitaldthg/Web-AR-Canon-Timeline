@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img v-if="target.GLTF_data === null" class="backgroundImg" :src = "GetTitleImagePath(target)"/>
+    <img v-if="target.GLTF_data === null && target.title_image != null" class="backgroundImg" :src = "GetTitleImagePath(target)"/>
     
     <div class="shortDescriptionContainer">
         <img class="backgroundPanel" src="assets/common/Long Description Board.png"  />
