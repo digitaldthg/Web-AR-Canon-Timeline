@@ -1,0 +1,68 @@
+body {
+    background-color: black !important;
+    font-family: "Barlow" !important;
+    scrollbar-width: thin;          /* "auto" or "thin"  */
+    scrollbar-color: blue orange;   /* scroll thumb & track */
+}
+
+.btn{
+  border-radius: 0%;
+}
+
+.topbaricons{
+    height:50%;
+    width:auto;
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+}
+
+h1{
+  font-family: "Barlow-Bold";
+  font-size: x-large !important;
+  margin-bottom: 0;
+}
+
+h2{
+  font-family: "Barlow-SemiBold";
+  font-size: large !important;
+  margin-bottom: 20px;
+}
+.textContainer{
+  position: absolute;
+  margin: 20px;
+  top: 0;
+  }
+
+  body::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+  }
+  body::-webkit-scrollbar-track {
+    background: orange;        /* color of the tracking area */
+  }
+  body::-webkit-scrollbar-thumb {
+    background-color: blue;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 3px solid orange;  /* creates padding around scroll thumb */
+  }
+
+@font-face {
+  font-family: "Barlow";
+  src: url("assets/fonts/Barlow/Barlow-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Barlow-Bold";
+  src: url("assets/fonts/Barlow/Barlow-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Barlow-SemiBold";
+  src: url("assets/fonts/Barlow/Barlow-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "Barlow-ExtraBold";
+  src: url("assets/fonts/Barlow/Barlow-ExtraBold.ttf");
+}
