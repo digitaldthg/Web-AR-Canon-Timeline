@@ -23,7 +23,9 @@ Vue.config.ignoredElements = [
   'a-camera',
   'a-box',
   'a-nft',
-  'a-marker'
+  'a-marker',
+  'a-marker-camera',
+  'a-light'
 ]
 new Vue({
   store,

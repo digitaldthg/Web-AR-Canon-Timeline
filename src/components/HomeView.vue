@@ -47,9 +47,9 @@ z-index: 9;
 height: 250px;
   width: 400px;
 float:right;
-margin: 20px;
+margin: 10px;
 position: relative;
-top:270px;
+top:230px;
 z-index: 10;
 }
 

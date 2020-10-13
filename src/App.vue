@@ -15,20 +15,23 @@
       </div>
 
       <div class="windowfixed" v-if="this.$store.state.isVisible">
-        <TargetInterface :target="this.$store.state.targets[this.$store.state.currentTargetID]" />
+        <TargetInterface
+          :target="this.$store.state.targets[this.$store.state.currentTargetID]"
+        />
       </div>
-      <div class="ARWindow">
-        <a-scene arjs="detectionMode: mono_and_matrix; matrixCodeType: 3x3;">
-          <!-- handle marker with your own pattern -->
-          <a-marker type="barcode" value="2" detect-visible-component="targetID: 2">
-            <a-entity :gltf-model="GetModelPath(this.$store.state.targets[2])" scale="0.1 0.1 0.1"></a-entity>
-          </a-marker>
 
-          <a-marker type="barcode" value="5" detect-visible-component="targetID: 4">
-            <a-entity :gltf-model="GetModelPath(this.$store.state.targets[4])" scale="0.1 0.1 0.1"></a-entity>
-          </a-marker>
-        </a-scene>
-      </div>
+      <a-scene 
+        arjs="detectionMode: mono_and_matrix; matrixCodeType: 4x4_BCH_13_9_3;"
+      >
+        <CustomMarker
+          v-for="(value, key) in this.$store.state.targets"
+          :key="key"
+          :id="key"
+          :idString="GetTargetIdString(key)"
+        />
+        <a-light color="white" position="-1 1 0"></a-light>
+        <a-entity camera></a-entity>
+      </a-scene>
     </div>
   </div>
 </template>
@@ -37,59 +40,31 @@
 import TargetInterface from "./components/TargetInterface.vue";
 import TargetButton from "./components/TargetButton.vue";
 import TopbarIcons from "./components/TopbarIcons.vue";
-import { store } from "./store.js";
-
-AFRAME.registerComponent("detect-visible-component", {
-  schema: {
-    targetID: { type: "int", default: null }
-  },
-  init: function() {
-    console.log("INIT " + this.el.object3D.visible);
-    this.oldVisible = this.el.object3D.visible;
-  },
-  tick: function() {
-    var newVisible = this.el.object3D.visible;
-    if (newVisible != this.oldVisible) {
-      if (newVisible) {
-        console.log("Show target with ID: " + this.data.targetID);
-        store.state.currentTargetID = this.data.targetID;
-        store.state.isVisible = true;
-      } else {
-        /*store.state.currentTargetID = this.data.targetID;
-        store.state.isVisible = false;*/
-      }
-      this.oldVisible = newVisible;
-    }
-  }
-});
+import CustomMarker from "./components/CustomMarker.vue";
 
 export default {
   name: "App",
   components: {
     TargetInterface,
     TargetButton,
-    TopbarIcons
+    TopbarIcons,
+    CustomMarker,
   },
   data() {
     return {
-      loading: true
+      loading: true,
     };
   },
   methods: {
-    GetModelPath: function(t) {
-      console.log("GEt Model Path");
-      if (typeof t != "undefined") {
-        //var path = "assets/02_windmachine/02_windmachine_01title.png";
-        var path = "url(assets/" + t.folder + "/model/" + t.GLTF_data+")";
-        console.log(path);
-        return path;
-      }
-    }
+    GetTargetIdString: function (id) {
+      var idString = "targetID: " + id;
+      return idString;
+    },
   },
   mounted() {
     (this.loading = true),
       this.$store.dispatch("fetchData").finally(() => (this.loading = false));
-  }
+  },
 };
 </script>
 
@@ -116,13 +91,13 @@ export default {
 .buttonrow {
   height: 50px;
   width: 100%;
-  top: 70px;
+  top: 10px;
   left: 0;
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 11;
+  z-index: 9;
 }
 
 .windowfixed {

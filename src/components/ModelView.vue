@@ -7,6 +7,7 @@
 <script>
 import * as Three from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 export default {
@@ -74,11 +75,20 @@ export default {
         this.container.clientHeight
       );
 
-      /*var axesHelper = new THREE.AxesHelper( 5 );
-      this.scene.add( axesHelper );*/
+      var axesHelper = new THREE.AxesHelper( 5 );
+      this.scene.add( axesHelper );
 
       const loader = new GLTFLoader();
+console.log("assets/" +
+          this.$props.target.folder +
+          "/model/" +
+          this.$props.target.GLTF_data)
+      var dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath( '/examples/js/libs/draco/' );
+loader.setDRACOLoader( dracoLoader );
       loader.load(
+        
+
         "assets/" +
           this.$props.target.folder +
           "/model/" +
@@ -88,10 +98,12 @@ export default {
           this.mesh = gltf.scene;
           this.mesh.scale.set(0.01, 0.01, 0.01);
           this.mesh.position.set(0, 0, 0);
+          console.log("LOADED");
           this.animationclip = gltf.animations[0];
           this.mixer = new THREE.AnimationMixer(this.mesh);
           this.mixer.clipAction(gltf.animations[0]).play();
           this.startAnimation();
+          
         },
         // called while loading is progressing
         function(xhr) {

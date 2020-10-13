@@ -15,7 +15,7 @@ export const store = new Vuex.Store({
             ImageState:'Images',
             MapState:'Map'
         },
-        currentTargetID: 0,
+        currentTargetID: null,
         currentInterfaceState: 'AR',
         isVisible: false
     },
@@ -45,8 +45,10 @@ export const store = new Vuex.Store({
         },
         setVisible(state, isVisible) {
             this.state.isVisible = isVisible;
+            
             if(!isVisible){
-                this.state.currentInterfaceState =  'AR';
+              this.state.currentTargetID = null;
+              this.state.currentInterfaceState =  'AR';
             }
         },
         setCurrentInterfaceState(state, interfaceState) {

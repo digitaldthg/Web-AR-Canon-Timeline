@@ -57,7 +57,7 @@ img{
   height: 50px;
   width: 100%;
   left: 20px;
-  bottom: 70px;
+  bottom: 55px;
   position: absolute;
   z-index: 9999;
   display: flex;
