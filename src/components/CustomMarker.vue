@@ -6,7 +6,7 @@
   >
     <a-entity
       :gltf-model="GetModelPath(this.$store.state.targets[id])"
-      scale = "0.04 0.04 0.04"
+      scale = "0.02 0.02 0.02"
       position="0 0 0"
     ></a-entity>
     <!--<a-box color="tomato" scale="1 1 1"

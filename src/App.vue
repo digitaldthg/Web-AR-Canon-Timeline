@@ -19,8 +19,13 @@
           :target="this.$store.state.targets[this.$store.state.currentTargetID]"
         />
       </div>
-
-      <a-scene 
+      <img
+        v-if="!this.$store.state.isVisible"
+        class="scanIcon"
+        src="assets/common/Scan Board.png"
+      />
+      <a-scene
+        vr-mode-ui="enabled: false"
         arjs="detectionMode: mono_and_matrix; matrixCodeType: 4x4_BCH_13_9_3;"
       >
         <CustomMarker
@@ -97,7 +102,16 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 11;
+}
+
+.scanIcon {
+  display: block;
+  position: absolute;
   z-index: 9;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .windowfixed {

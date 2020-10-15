@@ -1,6 +1,8 @@
 <template>
   <div id="container">
-    <div v-if="this.loadingProgress < 100" id="loadingText">{{this.loadingProgress}}</div>
+    <div v-if="this.loadingProgress < 100" id="loadingText">
+      {{ this.loadingProgress }}
+    </div>
   </div>
 </template>
 
@@ -24,7 +26,7 @@ export default {
       mesh: null,
       animationclip: null,
       clock: null,
-      audio: null
+      audio: null,
     };
   },
 
@@ -37,26 +39,33 @@ export default {
       const fov = 60; // Field of view
       const aspect = this.container.clientWidth / this.container.clientHeight;
       const near = 0.1; // the near clipping plane
-      const far = 10; // the far clipping plane
+      const far = 100; // the far clipping plane
       const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
       camera.position.set(0, 2, 5);
       this.camera = camera;
       // create scene
       this.scene = new THREE.Scene();
-      this.scene.background = new THREE.Color("grey");
+      this.scene.background = new THREE.Color("white");
       // add lights
       const ambientLight = new THREE.HemisphereLight(
         0xffffff, // bright sky color
         0x222222, // dim ground color
         1 // intensity
       );
-      const mainLight = new THREE.DirectionalLight(0xffffff, 4.0);
+      const mainLight = new THREE.DirectionalLight(0xffffff, 7.0);
+      mainLight.castShadow = true;
       mainLight.position.set(10, 10, 10);
+      mainLight.shadow.mapSize.width = 2048;
+      mainLight.shadow.mapSize.height = 2048;
       this.scene.add(ambientLight, mainLight);
+      this.scene.fog = new THREE.Fog( new THREE.Color("white"), 10, 50);
+
       // add controls
       this.controls = new OrbitControls(this.camera, this.container);
       // create renderer
       this.renderer = new THREE.WebGLRenderer({ antialias: true });
+      this.renderer.shadowMap.enabled = true;
+      this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       this.renderer.setSize(
         this.container.clientWidth,
         this.container.clientHeight
@@ -75,27 +84,53 @@ export default {
         this.container.clientHeight
       );
 
-      var axesHelper = new THREE.AxesHelper( 5 );
-      this.scene.add( axesHelper );
+      /*var axesHelper = new THREE.AxesHelper(5);
+      this.scene.add(axesHelper);*/
+
+      //Create a plane that receives shadows (but does not cast them)
+      var geometry = new THREE.PlaneGeometry(100, 100, 100, 100);
+      geometry.rotateX( - Math.PI / 2 );
+
+      var material = new THREE.MeshStandardMaterial({
+        color: 0xCECECE,
+        roughness :1
+      });
+
+      var plane = new THREE.Mesh(geometry, material);
+      plane.receiveShadow = true;
+      plane.castShadow = true;
+    
+
+      this.scene.add(plane);
 
       const loader = new GLTFLoader();
-console.log("assets/" +
+      console.log(
+        "assets/" +
           this.$props.target.folder +
           "/model/" +
-          this.$props.target.GLTF_data)
+          this.$props.target.GLTF_data
+      );
       var dracoLoader = new DRACOLoader();
-dracoLoader.setDecoderPath( '/examples/js/libs/draco/' );
-loader.setDRACOLoader( dracoLoader );
+      dracoLoader.setDecoderPath("/examples/js/libs/draco/");
+      loader.setDRACOLoader(dracoLoader);
       loader.load(
-        
-
         "assets/" +
           this.$props.target.folder +
           "/model/" +
           this.$props.target.GLTF_data,
-        gltf => {
+        (gltf) => {
           this.scene.add(gltf.scene);
           this.mesh = gltf.scene;
+          gltf.scene.traverse( function ( child ) {
+
+            if ( child.isMesh ) {
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+
+            }
+
+        } );
           this.mesh.scale.set(0.01, 0.01, 0.01);
           this.mesh.position.set(0, 0, 0);
           console.log("LOADED");
@@ -103,10 +138,9 @@ loader.setDRACOLoader( dracoLoader );
           this.mixer = new THREE.AnimationMixer(this.mesh);
           this.mixer.clipAction(gltf.animations[0]).play();
           this.startAnimation();
-          
         },
         // called while loading is progressing
-        function(xhr) {
+        function (xhr) {
           this.loadingProgress = (xhr.loaded / xhr.total) * 100;
           console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
         },
@@ -129,7 +163,6 @@ loader.setDRACOLoader( dracoLoader );
       this.clock = new THREE.Clock();
       if (this.animationclip != null) {
         if (this.$props.target.audio_animation != null) {
-          
           this.audio = new Audio(
             "assets/" +
               this.$props.target.folder +
@@ -142,7 +175,7 @@ loader.setDRACOLoader( dracoLoader );
 
         this.animate();
       }
-    }
+    },
   },
   mounted() {
     this.init();
@@ -152,16 +185,16 @@ loader.setDRACOLoader( dracoLoader );
       this.audio.pause();
       this.audio.currentTime = 0;
     }
-  }
+  },
 };
 </script>
 
 <style scoped>
 #container {
   position: absolute;
-top:50px;
+  top: 50px;
   height: 100%;
   width: 100%;
-  z-index:9;
+  z-index: 9;
 }
 </style>
