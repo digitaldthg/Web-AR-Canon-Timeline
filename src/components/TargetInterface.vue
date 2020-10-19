@@ -6,7 +6,9 @@
     <LongTextView v-if="this.$store.state.currentInterfaceState === 'Text'" :target="target"/>
     <SlideshowView v-if="this.$store.state.currentInterfaceState === 'Images'" :target="target"/>
     <VideoView v-if="this.$store.state.currentInterfaceState === 'Video'" :target="target"/>
-    
+  <div>
+          <img id="closeIcon"  @click="close" src = "assets/common/Scan.png"/>
+  </div>
     <div class="buttonrow">
       <InteractionButton sourceInactive="assets/common/01 AR Icon Inactive.png" sourceActive="assets/common/01 AR Icon Active.png" :state="this.$store.state.interfaceStates.ARState"/>
       <InteractionButton v-if="target.GLTF_data != null" sourceInactive="assets/common/02 3D Model Icon Inactive.png" sourceActive="assets/common/02 3D Model Icon Active.png" :state="this.$store.state.interfaceStates.ModelState"/>
@@ -35,6 +37,11 @@ export default {
     LongTextView,
     SlideshowView,
     VideoView
+  },
+  methods: {
+    close: function() {
+      this.$store.commit("setVisible", false);
+    }
   }
 }
 
@@ -45,21 +52,21 @@ export default {
   margin-bottom: 10px;
 }
 
-img{
-  height: 100%;
-  width: auto;
+#closeIcon{
+left: -9px;
+  top: 80px;
   position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
 }
 
 .buttonrow {
   height: 50px;
   width: 100%;
-  left: 20px;
-  bottom: 55px;
+  left: 0px;
+  bottom: 0px;
   position: absolute;
-  z-index: 9999;
+  z-index: 12;
   display: flex;
 }
 </style>

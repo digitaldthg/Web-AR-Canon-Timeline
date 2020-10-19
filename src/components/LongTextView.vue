@@ -27,10 +27,10 @@ export default {
 .container{
 position: absolute;
 width: 733px;
-height: 523px;
+height: 470px;
 left: 50%;
 transform: translateX(-50%);
-top: 70px;
+top: 78px;
 z-index:9;
 }
 

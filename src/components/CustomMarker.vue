@@ -1,12 +1,12 @@
 <template>
-  <a-marker
+  <a-marker v-if="id === this.$store.state.currentTargetID || this.$store.state.currentTargetID === null"
     type="barcode"
     :value="id"
     :detect-visible-component="idString"
   >
     <a-entity
       :gltf-model="GetModelPath(this.$store.state.targets[id])"
-      scale = "0.02 0.02 0.02"
+      scale = "0.05 0.05 0.05"
       position="0 0 0"
     ></a-entity>
     <!--<a-box color="tomato" scale="1 1 1"
@@ -19,7 +19,7 @@ import { store } from "../store.js";
 
 AFRAME.registerComponent("detect-visible-component", {
   schema: {
-    targetID: { type: "int", default: null },
+    targetID: { type: "string", default: null },
   },
   init: function () {
     console.log("INIT " + this.el.object3D.visible);
@@ -27,7 +27,7 @@ AFRAME.registerComponent("detect-visible-component", {
   },
   tick: function () {
     var newVisible = this.el.object3D.visible;
-    if (newVisible != this.oldVisible && (store.state.currentTargetID == this.data.targetID || store.state.currentTargetID == null)) {
+    if (newVisible != this.oldVisible) {
       if (newVisible) {
         console.log("Show target with ID: " + this.data.targetID);
         store.state.currentTargetID = this.data.targetID;

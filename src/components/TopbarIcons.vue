@@ -1,6 +1,6 @@
 <template>
   <div class="iconContainer">
-      <img class="icon"  @click="close" src = "assets/common/Icon Close.png"/>
+
       <img class="icon" src = "assets/common/Icon Language English.png"/>
       <img class="icon" src = "assets/common/Icon Account.png"/>
       <img class="icon" src = "assets/common/Icon Like.png"/>
@@ -12,12 +12,7 @@
 
 <script>
 export default {
-  name: "TopbarIcons",
-  methods: {
-    close: function() {
-      this.$store.commit("setVisible", false);
-    }
-  }
+  name: "TopbarIcons"
 };
 </script>
 
@@ -29,8 +24,7 @@ export default {
   z-index:14;
 }
 .icon{
-    height:50%;
-    width:auto;
+  margin-top: 10px;
     float:right;
     z-index:14;
 }

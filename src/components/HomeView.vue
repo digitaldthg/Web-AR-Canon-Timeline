@@ -1,69 +1,99 @@
 <template>
   <div>
-    <img v-if="target.GLTF_data === null && target.title_image != null" class="backgroundImg" :src = "GetTitleImagePath(target)"/>
-    
-    <div class="shortDescriptionContainer">
-        <img class="backgroundPanel" src="assets/common/Long Description Board.png"  />
-        <!--<img class="icon" src="assets/common/Icon Info.png"/>-->
-        <div class="textContainer">
-        <h1>{{target.title}}</h1>
-        <h2>{{target.subtitle}}</h2>
-        <p>{{target.shorttext}}</p>
-        </div>
+    <img
+      v-if="target.GLTF_data === null && target.title_image != null"
+      class="backgroundImg"
+      :src="GetTitleImagePath(target)"
+    />
+    <div>
+      <img
+        id="infoIcon"
+        v-if="isVisible === false"
+        @click="open"
+        src="assets/common/Icon Info.png"
+      />
     </div>
-
-
-
-    
+    <div v-if="isVisible === true" class="shortDescriptionContainer">
+      <img
+        class="backgroundPanel"
+        src="assets/common/Long Description Board.png"
+      />
+      <img class="icon" @click="close" src="assets/common/Icon Close.png" />
+      <div class="textContainer">
+        <h1>{{ target.title }}</h1>
+        <h2>{{ target.subtitle }}</h2>
+        <p>{{ target.shorttext }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "HomeView",
-  props:['target'],
+  props: ["target"],
+  data() {
+    return {
+      isVisible: true,
+    };
+  },
+  mounted() {
+    this.isVisible = true;
+  },
   methods: {
-    GetTitleImagePath: function(target) {
+    GetTitleImagePath: function (target) {
       //var path = "assets/02_windmachine/02_windmachine_01title.png";
-      var path = "assets/"+target.folder+"/images/"+target.title_image;
-        return path;
-    }
-  }
+      var path = "assets/" + target.folder + "/images/" + target.title_image;
+      return path;
+    },
+    open: function () {
+      console.log("Show Info");
+      this.isVisible = true;
+    },
+    close: function () {
+      console.log("Hide Info");
+      this.isVisible = false;
+    },
+  },
 };
 </script>
 
 <style scoped>
-.backgroundImg{
+.backgroundImg {
   height: 100%;
   width: auto;
   position: absolute;
-  top:50px;
-left: 50%;
-transform: translateX(-50%);
-z-index: 9;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9;
 }
 
-.shortDescriptionContainer{
-height: 250px;
+.shortDescriptionContainer {
+  height: 250px;
   width: 400px;
-float:right;
-margin: 10px;
-position: relative;
-top:230px;
-z-index: 10;
+
+  position: absolute;
+  top: 87px;
+right:0;
+  z-index: 12;
 }
 
-.backgroundPanel{
-    position: absolute;
-height: 100%;
+.backgroundPanel {
+  position: absolute;
+  height: 100%;
   width: 100%;
 }
 
-.icon{
-    position:relative;
-    float:right;
+.icon {
+  position: relative;
+  float: right;
+  z-index: 14;
 }
-
-
-
+#infoIcon {
+  right: -6px;
+  top: 79px;
+  position: absolute;
+  z-index: 14;
+}
 </style>

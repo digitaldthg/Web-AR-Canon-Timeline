@@ -1,8 +1,6 @@
 <template>
   <div id="container">
-    <div v-if="this.loadingProgress < 100" id="loadingText">
-      {{ this.loadingProgress }}
-    </div>
+    <div v-if="loading" id="loadingText">Loading..</div>
   </div>
 </template>
 
@@ -15,9 +13,9 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 export default {
   name: "ModelView",
   props: ["target"],
-  data() {
+  data: function () {
     return {
-      loadingProgress: null,
+      loading: true,
       container: null,
       camera: null,
       scene: null,
@@ -47,18 +45,17 @@ export default {
       this.scene = new THREE.Scene();
       this.scene.background = new THREE.Color("white");
       // add lights
-      const ambientLight = new THREE.HemisphereLight(
-        0xffffff, // bright sky color
-        0x222222, // dim ground color
-        1 // intensity
-      );
+      var pointLight = new THREE.PointLight(0xff0000, 5);
+      pointLight.position.set(0, 5, 0);
+
       const mainLight = new THREE.DirectionalLight(0xffffff, 7.0);
       mainLight.castShadow = true;
       mainLight.position.set(10, 10, 10);
+      mainLight.intensity = 5;
       mainLight.shadow.mapSize.width = 2048;
       mainLight.shadow.mapSize.height = 2048;
-      this.scene.add(ambientLight, mainLight);
-      this.scene.fog = new THREE.Fog( new THREE.Color("white"), 10, 50);
+      this.scene.add(ambientLight, pointLight);
+      this.scene.fog = new THREE.Fog(new THREE.Color("white"), 10, 50);
 
       // add controls
       this.controls = new OrbitControls(this.camera, this.container);
@@ -89,17 +86,16 @@ export default {
 
       //Create a plane that receives shadows (but does not cast them)
       var geometry = new THREE.PlaneGeometry(100, 100, 100, 100);
-      geometry.rotateX( - Math.PI / 2 );
+      geometry.rotateX(-Math.PI / 2);
 
       var material = new THREE.MeshStandardMaterial({
-        color: 0xCECECE,
-        roughness :1
+        color: 0xcecece,
+        roughness: 1,
       });
 
       var plane = new THREE.Mesh(geometry, material);
       plane.receiveShadow = true;
       plane.castShadow = true;
-    
 
       this.scene.add(plane);
 
@@ -121,27 +117,26 @@ export default {
         (gltf) => {
           this.scene.add(gltf.scene);
           this.mesh = gltf.scene;
-          gltf.scene.traverse( function ( child ) {
-
-            if ( child.isMesh ) {
-
-                child.castShadow = true;
-                child.receiveShadow = true;
-
+          gltf.scene.traverse(function (child) {
+            if (child.isMesh) {
+              child.castShadow = true;
+              child.receiveShadow = true;
             }
-
-        } );
+          });
           this.mesh.scale.set(0.01, 0.01, 0.01);
           this.mesh.position.set(0, 0, 0);
           console.log("LOADED");
+          this.loading = false;
+
           this.animationclip = gltf.animations[0];
-          this.mixer = new THREE.AnimationMixer(this.mesh);
-          this.mixer.clipAction(gltf.animations[0]).play();
-          this.startAnimation();
+          if (this.animationclip != null) {
+            this.mixer = new THREE.AnimationMixer(this.mesh);
+            this.mixer.clipAction(gltf.animations[0]).play();
+            this.startAnimation();
+          }
         },
         // called while loading is progressing
         function (xhr) {
-          this.loadingProgress = (xhr.loaded / xhr.total) * 100;
           console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
         },
         undefined
@@ -191,10 +186,23 @@ export default {
 
 <style scoped>
 #container {
+  display: block;
   position: absolute;
-  top: 50px;
+  top: 0px;
+  left: 0;
   height: 100%;
   width: 100%;
   z-index: 9;
+}
+
+#loadingText {
+  display: block;
+  position: absolute;
+  z-index: 14;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Barlow-SemiBold";
+  font-size: large !important;
 }
 </style>

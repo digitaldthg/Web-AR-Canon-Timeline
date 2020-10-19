@@ -1,10 +1,13 @@
 <template>
   <div>
     <div v-if="!this.loading">
+
       <div class="topbar">
-        <img class="topbaricons" src="assets/common/Artboard.png" />
-        <TopbarIcons v-if="this.$store.state.isVisible" />
+        <img class="topbarPanel" src="assets/common/Topbar.png" />
+        <img class="logo" src="assets/common/Artboard.png" />
+        <TopbarIcons />
       </div>
+
       <div class="buttonrow">
         <TargetButton
           v-for="(value, key) in this.$store.state.targets"
@@ -19,24 +22,14 @@
           :target="this.$store.state.targets[this.$store.state.currentTargetID]"
         />
       </div>
+
       <img
         v-if="!this.$store.state.isVisible"
         class="scanIcon"
         src="assets/common/Scan Board.png"
       />
-      <a-scene
-        vr-mode-ui="enabled: false"
-        arjs="detectionMode: mono_and_matrix; matrixCodeType: 4x4_BCH_13_9_3;"
-      >
-        <CustomMarker
-          v-for="(value, key) in this.$store.state.targets"
-          :key="key"
-          :id="key"
-          :idString="GetTargetIdString(key)"
-        />
-        <a-light color="white" position="-1 1 0"></a-light>
-        <a-entity camera></a-entity>
-      </a-scene>
+
+      <ARScene/>
     </div>
   </div>
 </template>
@@ -45,7 +38,8 @@
 import TargetInterface from "./components/TargetInterface.vue";
 import TargetButton from "./components/TargetButton.vue";
 import TopbarIcons from "./components/TopbarIcons.vue";
-import CustomMarker from "./components/CustomMarker.vue";
+import ARScene from "./components/ARScene.vue";
+import * as Three from "three";
 
 export default {
   name: "App",
@@ -53,22 +47,16 @@ export default {
     TargetInterface,
     TargetButton,
     TopbarIcons,
-    CustomMarker,
+    ARScene
   },
   data() {
     return {
-      loading: true,
+      loading: false,
     };
   },
-  methods: {
-    GetTargetIdString: function (id) {
-      var idString = "targetID: " + id;
-      return idString;
-    },
-  },
   mounted() {
-    (this.loading = true),
-      this.$store.dispatch("fetchData").finally(() => (this.loading = false));
+    this.loading = true,
+    this.$store.dispatch("fetchData").finally(() => (this.loading = false));
   },
 };
 </script>
@@ -83,14 +71,27 @@ export default {
 }
 
 .topbar {
-  background-color: white;
   position: absolute;
   top: 0;
   left: 0;
-  height: 70px;
   width: 100%;
   display: flex;
-  z-index: 10;
+  z-index: 11;
+}
+
+.logo{
+  z-index:11;
+  position: absolute;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+.topbarPanel{
+position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  display: flex;
 }
 
 .buttonrow {
@@ -102,7 +103,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 11;
+  z-index: 9;
 }
 
 .scanIcon {
@@ -118,11 +119,6 @@ export default {
   top: 70px;
   height: 100%;
   width: 100%;
-}
-
-.ARWindow {
-  height: 100px;
-  width: 100px;
 }
 
 .col-fixed {
