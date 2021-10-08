@@ -4,6 +4,8 @@ Ziel des Verbundprojektes ["CANON Theater Technik Geschichte"](https://www.canon
 
 Im Rahmen der Kooperation mit digital.DTHG entstand der Prototyp einer augmentiert Zeitleise, die es den Benutzern ermöglicht, Meilensteine und Schlüsselbeispiele für historische Praktiken, Artefakte, Technologien und Gebäude zu visualisieren. Auf ausgedruckten Markern, die auf einer Papierzeitleiste platziert werden können, werden hinterlegte digitalisierte historische Objekte angezeigt und dazugehörige Audioaufnahmen, Bilder, Text und/oder Videos gezeigt.
 
+![CanonImage](https://github.com/digitaldthg/canon_timeline/blob/main/IMG_20201013_140132-Gross.jpeg)
+
 Mehr Informationen gibt es auf der Seite der [digital.DTHG](https://digital.dthg.de/projekte/canon-theater-technik-geschichte/)
 
 ## Project setup
