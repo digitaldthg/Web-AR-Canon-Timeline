@@ -2,7 +2,7 @@
   <a-scene
     renderer="antialias: true; logarithmicDepthBuffer: true; colorManagement: true; sortObjects: true;"
     vr-mode-ui="enabled: false"
-    arjs="sourceWidth:1920; sourceHeight:1080; trackingMethod: best; detectionMode: mono_and_matrix; matrixCodeType: 4x4_BCH_13_9_3;"
+    arjs="sourceWidth:1920; sourceHeight:1080; trackingMethod: best; detectionMode: mono_and_matrix; matrixCodeType: 3x3_parity_6_5;"
   >
     <CustomMarker
       v-for="(value, key) in this.$store.state.targets"
