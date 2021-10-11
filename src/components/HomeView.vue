@@ -42,16 +42,13 @@ export default {
   },
   methods: {
     GetTitleImagePath: function (target) {
-      //var path = "assets/02_windmachine/02_windmachine_01title.png";
       var path = "assets/" + target.folder + "/images/" + target.title_image;
       return path;
     },
     open: function () {
-      console.log("Show Info");
       this.isVisible = true;
     },
     close: function () {
-      console.log("Hide Info");
       this.isVisible = false;
     },
   },

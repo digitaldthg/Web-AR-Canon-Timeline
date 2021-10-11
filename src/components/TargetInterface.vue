@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <HomeView v-if="this.$store.state.currentInterfaceState === 'AR'" :target="target"/>
     <ModelView v-if="this.$store.state.currentInterfaceState === '3DModel'" :target="target"/>
     <LongTextView v-if="this.$store.state.currentInterfaceState === 'Text'" :target="target"/>

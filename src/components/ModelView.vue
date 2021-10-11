@@ -48,13 +48,13 @@ export default {
       var pointLight = new THREE.PointLight(0xff0000, 5);
       pointLight.position.set(0, 5, 0);
 
-      const mainLight = new THREE.DirectionalLight(0xffffff, 7.0);
+      const mainLight = new THREE.DirectionalLight(0xffffff, 1.5);
       mainLight.castShadow = true;
       mainLight.position.set(10, 10, 10);
       mainLight.intensity = 5;
       mainLight.shadow.mapSize.width = 2048;
       mainLight.shadow.mapSize.height = 2048;
-      this.scene.add(ambientLight, pointLight);
+      this.scene.add(mainLight, pointLight);
       this.scene.fog = new THREE.Fog(new THREE.Color("white"), 10, 50);
 
       // add controls
@@ -100,12 +100,12 @@ export default {
       this.scene.add(plane);
 
       const loader = new GLTFLoader();
-      console.log(
+      /*console.log(
         "assets/" +
           this.$props.target.folder +
           "/model/" +
           this.$props.target.GLTF_data
-      );
+      );*/
       var dracoLoader = new DRACOLoader();
       dracoLoader.setDecoderPath("/examples/js/libs/draco/");
       loader.setDRACOLoader(dracoLoader);
@@ -125,7 +125,6 @@ export default {
           });
           this.mesh.scale.set(0.01, 0.01, 0.01);
           this.mesh.position.set(0, 0, 0);
-          console.log("LOADED");
           this.loading = false;
 
           this.animationclip = gltf.animations[0];
@@ -137,7 +136,7 @@ export default {
         },
         // called while loading is progressing
         function (xhr) {
-          console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+          //console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
         },
         undefined
       );

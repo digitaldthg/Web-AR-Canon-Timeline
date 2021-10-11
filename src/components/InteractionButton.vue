@@ -11,7 +11,6 @@ export default {
   props: ['sourceInactive', 'sourceActive','state'],
   methods: {
     ChangeView: function(state) {
-        console.log("Change State");
       this.$store.commit("setCurrentInterfaceState", state);
     }
   }

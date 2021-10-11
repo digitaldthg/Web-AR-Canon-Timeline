@@ -8,14 +8,16 @@
         <TopbarIcons />
       </div>
 
-      <div class="buttonrow">
+
+      <!--DEBUG BUTTONS
+        <div class="buttonrow">
         <TargetButton
           v-for="(value, key) in this.$store.state.targets"
           :key="key"
           :name="value.title"
           :id="key"
         />
-      </div>
+      </div>-->
 
       <div class="windowfixed" v-if="this.$store.state.isVisible">
         <TargetInterface
@@ -56,6 +58,7 @@ export default {
   },
   mounted() {
     this.loading = true,
+    //Load Data from CanonData.json
     this.$store.dispatch("fetchData").finally(() => (this.loading = false));
   },
 };
@@ -103,7 +106,7 @@ position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9;
+  z-index: 99;
 }
 
 .scanIcon {

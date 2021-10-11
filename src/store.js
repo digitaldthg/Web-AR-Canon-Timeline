@@ -36,7 +36,7 @@ export const store = new Vuex.Store({
       },
 
     mutations: {
-        setData: (state, targets) => { //capitalization is good-practice for vuex-mutations
+        setData: (state, targets) => {
             state.targets = targets;
         },
         setCurrentTargetID(state, id) {
