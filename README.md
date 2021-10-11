@@ -8,7 +8,13 @@ Im Rahmen der Kooperation mit digital.DTHG entstand der Prototyp einer augmentie
 
 Mehr Informationen gibt es auf der Seite der [digital.DTHG](https://digital.dthg.de/projekte/canon-theater-technik-geschichte/)
 
-## Project setup
+## Projektaufbau
+Jeder Marker ist der Link zu einem historischen Objekt. In der CanonData.json sind diese Objekte und die dazugehörigen weiteren Daten definiert, welche unter den entsprechenden Pfaden abgelegt werden müssen. Im Moment werden YouTube Videos, Bilder, Text, GLTF Modelle und MP3's unterstützt. 
+
+Das Frontend ist mit Vue2 entwickelt, für das Marker Tracking wird a-frame verwendet.
+
+## NPM commands
+### Installs packages
 ```
 npm install
 ```
