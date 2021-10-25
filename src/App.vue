@@ -41,7 +41,6 @@ import TargetInterface from "./components/TargetInterface.vue";
 import TargetButton from "./components/TargetButton.vue";
 import TopbarIcons from "./components/TopbarIcons.vue";
 import ARScene from "./components/ARScene.vue";
-import * as Three from "three";
 
 export default {
   name: "App",

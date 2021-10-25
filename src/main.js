@@ -17,6 +17,8 @@ Vue.use(require('vue-resource'));
 
 
 Vue.config.productionTip = false
+
+//Ignore AFrame components
 Vue.config.ignoredElements = [
   'a-scene',
   'a-entity',

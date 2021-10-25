@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state: {
-        targets:[],
+        targets:[], //targets that are defined in CanonData.json
         interfaceStates:{
             ARState:'AR',
             ModelState:'3DModel',
@@ -17,7 +17,7 @@ export const store = new Vuex.Store({
         },
         currentTargetID: null,
         currentInterfaceState: 'AR',
-        isVisible: false
+        isVisible: false //one target is selected?
     },
 
     actions: {
