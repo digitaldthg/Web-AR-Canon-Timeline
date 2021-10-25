@@ -1,4 +1,4 @@
-# canon_timeline
+# Web XR Canon Timeline
 
 Ziel des Verbundprojektes ["CANON Theater Technik Geschichte"](https://www.canon-timeline.eu) mit neun europäischen Hochschulpartnern ist es, ein Bewusstsein und Verständnis für eine europäische Geschichte der Theatertechnik  zu fördern. Das Projekt leistet einen Beitrag zum aktuellen Diskurs über die Bewahrung des kulturellen Erbes transnationaler und internationaler Theatertechnologie und -technik.
 
